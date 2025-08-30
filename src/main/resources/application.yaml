@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: notification
+
+  # RabbitMQ Configuration
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin123
+    virtual-host: /
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 1000
+          max-attempts: 5
+          max-interval: 10000
+          multiplier: 2.0
+        acknowledge-mode: manual
+        prefetch: 1
+        default-requeue-rejected: false
+
+# Server Configuration
+server:
+  port: 9003
+
+# Logging
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+    org.springframework.amqp: DEBUG
+    org.springframework.amqp.rabbit: DEBUG
+    com.rabbitmq: DEBUG
+
+broker:
+  retry:
+    max-attempts: 5
+    initial-interval: 1000
+    multiplier: 2.0
+    max-interval: 10000
