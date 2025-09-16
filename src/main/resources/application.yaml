@@ -4,10 +4,10 @@ spring:
 
   # RabbitMQ Configuration
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: admin
-    password: admin123
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:admin}
+    password: ${RABBITMQ_PASSWORD:admin123}
     virtual-host: /
     listener:
       simple:
@@ -23,7 +23,7 @@ spring:
 
 # Server Configuration
 server:
-  port: 9003
+  port: ${SERVER_PORT:9003}
 
 # Logging
 logging:
