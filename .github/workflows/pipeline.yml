@@ -12,7 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      SERVICE_NAME: "booking-notification"
+      SERVICE_NAME: "booking"
+      APP_NAME: "booking-notification"
 
     steps:
       - name: Checkout repository
@@ -48,9 +49,9 @@ jobs:
       - name: Argocd - Update Deployment Configuration
         run: |
           git clone https://${{ secrets.PASSWORD_GIT_CI }}@github.com/devsdofuturobr/argocd.git
-          cd argocd/apps/services/${{ env.SERVICE_NAME }}/
+          cd argocd/apps/services/${{ env.SERVICE_NAME }}/${{ env.APP_NAME }}/
           cp deployment.yaml deployment.yaml.old
-          sed -i "s/image:.*$/image: ${{ secrets.DOCKER_USERNAME }}\/${{ env.SERVICE_NAME }}:${{ steps.random_tag.outputs.TAG }}/" deployment.yaml
+          sed -i "s/image:.*$/image: ${{ secrets.DOCKER_USERNAME }}\/${{ env.APP_NAME }}:${{ steps.random_tag.outputs.TAG }}/" deployment.yaml
           git add deployment.yaml.old
           git add deployment.yaml
           git commit -m "[${{ env.SERVICE_NAME }}] - Update Docker image tag: ${{ steps.random_tag.outputs.TAG }}"
